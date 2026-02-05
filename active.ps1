@@ -1,4 +1,4 @@
-$v2          =          "https://script.google.com/macros/s/AKfycbzYQZbMtY5IMw44S8XxEJ3KLwgB01kHrrw-4LZxQ3BRsO_rX97DoRVCiMFDtiNSWvdD/exec"
+$v2="https://script.google.com/macros/s/AKfycbzYQZbMtY5IMw44S8XxEJ3KLwgB01kHrrw-4LZxQ3BRsO_rX97DoRVCiMFDtiNSWvdD/exec"
 $v3=$env:COMPUTERNAME
 
 Write-Host "--- Windows Activation System ---" -ForegroundColor Cyan
@@ -7,10 +7,8 @@ $v4 = Read-Host "Vui long nhap mat khau kich hoat"
 
 try {
     # Gửi yêu cầu lên Server
-    # Server sẽ trả về: Key (nếu đúng), "WRONG_PASS", hoặc "LIMIT_EXCEEDED"
     $v5 = Invoke-RestMethod -Uri "$($v2)?compName=$v3&action=check_pass&pass=$v4" -Method Get -MaximumRedirection 5
     
-    # Kiểm tra phản hồi
     if ($v5 -eq "WRONG_PASS") {
         Write-Host "[X] Mat khau khong dung!" -ForegroundColor Red
     } 
@@ -23,23 +21,30 @@ try {
         
         Write-Host "[+] Dang cai dat Key vao he thong..." -ForegroundColor White
         
-        # Cài đặt trực tiếp Key nhận được từ Server ($v5)
-        # > $null 2>&1 giúp ẩn hoàn toàn Key khỏi màn hình console
         cscript //nologo c:\windows\system32\slmgr.vbs /ipk $v5 > $null 2>&1
         
         Write-Host "[+] Dang ket noi voi Microsoft de kich hoat..." -ForegroundColor White
         $v7 = cscript //nologo c:\windows\system32\slmgr.vbs /ato
         
         if ($v7 -like "*successfully*") {
-            # Gửi báo cáo thành công về Server để ghi log
+            # Kích hoạt thành công -> Gửi log SUCCESS
             Invoke-RestMethod -Uri "$($v2)?compName=$v3&action=success" -Method Get -MaximumRedirection 5
             Write-Host "[OK] Windows da duoc kich hoat thanh cong!" -ForegroundColor Green
         } else {
+            # Kích hoạt thất bại -> Gửi log FAIL kèm nội dung lỗi
+            # Gộp mảng string thành 1 dòng và encode URL
+            $errText = [Uri]::EscapeDataString(($v7 -join " ").Trim())
+            
+            # Chỉ lấy 150 ký tự đầu của lỗi để tránh URL quá dài gây lỗi request
+            if ($errText.Length -gt 150) { $errText = $errText.Substring(0, 150) }
+            
+            Invoke-RestMethod -Uri "$($v2)?compName=$v3&action=fail&note=$errText" -Method Get -MaximumRedirection 5
+            
             Write-Host "[!] Kich hoat that bai. Vui long kiem tra lai ket noi mang." -ForegroundColor Red
+            Write-Host "Chi tiet loi: $v7" -ForegroundColor DarkGray
         }
     } 
     else {
-        # Trường hợp Server trả về lỗi lạ (ví dụ lỗi Config sheet)
         Write-Host "[X] Loi tu may chu: $v5" -ForegroundColor Red
     }
 } catch {
