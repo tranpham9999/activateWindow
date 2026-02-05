@@ -1,5 +1,7 @@
 # 1. Khai báo
-$encodedKey = "V0JXS1ItTlE0NjQtS1JQQjQtOUdKN1ItVk1IMjY="
+$encodedKey = "VzI2OU4tV0ZHV1gtWVZDOUItNEo2QzktVDgzR1g="
+# V0JXS1ItTlE0NjQtS1JQQjQtOUdKN1ItVk1IMjY #key real
+# VzI2OU4tV0ZHV1gtWVZDOUItNEo2QzktVDgzR1g= #key test
 $webAppUrl = "https://script.google.com/macros/s/AKfycby7rigZWYIDqe2_YPpGZlrQiBj5IsRLQYSTBZnuLvwvyh3kd3AtyGu4X43ipz4BHPRd/exec"
 $compName = $env:COMPUTERNAME
 
