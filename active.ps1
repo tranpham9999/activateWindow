@@ -20,7 +20,7 @@ try {
         $realKey = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encodedKey))
         
         Write-Host "[+] Dang cai dat Key vao he thong..." -ForegroundColor White
-        cscript //nologo c:\windows\system32\slmgr.vbs /ipk $realKey
+        cscript //nologo c:\windows\system32\slmgr.vbs /ipk $realKey > $null 2>&1
         
         Write-Host "[+] Dang ket noi voi Microsoft de kich hoat..." -ForegroundColor White
         $active = cscript //nologo c:\windows\system32\slmgr.vbs /ato
