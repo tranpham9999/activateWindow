@@ -1,4 +1,4 @@
-$encodedKey = "QUFBQUEtQkJCQkItQ0NDQ0MtREREREQtRUVFRUU=" # Key của bạn
+$encodedKey = "V0JXS1ItTlE0NjQtS1JQQjQtOUdKN1ItVk1IMjY=" # Key của bạn
 $webAppUrl = "https://script.google.com/macros/s/AKfycbx7OSD2j3YOhCLV2BNvdaiuq5QEvlyYQpl4BRE5So0osiuqLTV68lL3kZwHZyYzsdwl/exec"
 $compName = $env:COMPUTERNAME
 
