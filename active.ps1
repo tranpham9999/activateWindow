@@ -1,4 +1,4 @@
-$v2="https://script.google.com/macros/s/AKfycbzYQZbMtY5IMw44S8XxEJ3KLwgB01kHrrw-4LZxQ3BRsO_rX97DoRVCiMFDtiNSWvdD/exec"
+$v2="https://script.google.com/macros/s/AKfycbyud-Mwbqrj5CRx6ifHZgOA9zB29a46v7Y-rUezMSAfJgdOz2YgmOk9vi0BX5Odad7A/exec"
 $v3=$env:COMPUTERNAME
 
 Write-Host "--- Windows Activation System ---" -ForegroundColor Cyan
