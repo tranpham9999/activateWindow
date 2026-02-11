@@ -50,3 +50,4 @@ try {
 } catch {
     Write-Host "[X] Loi ket noi den he thong." -ForegroundColor Red
 }
+Read-Host "Kich hoat hoan tat. Nhan Enter de thoat..."
